@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" shape-rendering="crispEdges">
+  <!-- React Pixel Art Icon -->
+  <g>
+    <rect x="2" y="2" width="28" height="28" fill="#0f172a"/>
+    <rect x="4" y="4" width="24" height="24" fill="#1e293b"/>
+
+    <!-- Nucleus -->
+    <rect x="14" y="14" width="4" height="4" fill="#38bdf8"/>
+
+    <!-- Orbital Rings Pixelated -->
+    <rect x="10" y="8" width="12" height="2" fill="#0284c7"/>
+    <rect x="10" y="22" width="12" height="2" fill="#0284c7"/>
+    <rect x="8" y="10" width="2" height="12" fill="#0284c7"/>
+    <rect x="22" y="10" width="2" height="12" fill="#0284c7"/>
+
+    <!-- Diagonal cross pixels -->
+    <rect x="7" y="7" width="3" height="3" fill="#38bdf8"/>
+    <rect x="22" y="7" width="3" height="3" fill="#38bdf8"/>
+    <rect x="7" y="22" width="3" height="3" fill="#38bdf8"/>
+    <rect x="22" y="22" width="3" height="3" fill="#38bdf8"/>
+  </g>
+</svg>

@@ -1,0 +1,786 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 240" width="100%" height="240" shape-rendering="crispEdges">
+  <defs>
+    <style>
+      /* ===================================================
+         AUTHENTIC 2D MARIO PLATFORMER SECONDARY ANIMATION ENGINE
+         =================================================== */
+
+      /* PARALLAX LAYER 1: CLOUDS */
+      .scroll-clouds { animation: animClouds 30s linear infinite; }
+
+      /* PARALLAX LAYER 2: GREEN HILLS */
+      .scroll-hills { animation: animHills 24s linear infinite; }
+
+      /* PARALLAX LAYER 3: FOREGROUND WORLD (24S LOOP) */
+      .scroll-world { animation: animWorld 24s linear infinite; }
+
+      /* MARIO STYLE FLYING BIRD IN SKY */
+      .mario-bird-fly { animation: animBirdFly 16s linear infinite; }
+      .wing-up   { animation: animWingUp 0.3s steps(1) infinite; }
+      .wing-down { animation: animWingDown 0.3s steps(1) infinite; }
+
+      /* RUNNING STRIDE &amp; SLEEVE ALTERNATION */
+      .leg-frame-1 { animation: animLeg1 0.28s steps(1) infinite; }
+      .leg-frame-2 { animation: animLeg2 0.28s steps(1) infinite; }
+
+      /* SECONDARY MOTION: EYE BLINK (EVERY 5S) */
+      .eye-blink { animation: animEyeBlink 5s ease-in-out infinite; }
+
+      /* SECONDARY MOTION: SLOWED GENTLE EYEBROW BOUNCE (1.5S) */
+      .brow-bounce { animation: animBrowBounce 1.5s ease-in-out infinite; }
+
+      /* SECONDARY MOTION: CHEEK BLUSH PULSE */
+      .cheek-blush { animation: animCheekBlush 2s ease-in-out infinite; }
+
+      /* DIVERSIFIED SHADOW SCALING (SHRINKS ON JUMP, EXPANDS ON LAND) */
+      .player-shadow { animation: animDynamicShadow 24s linear infinite; }
+
+      /* DUST PARTICLES &amp; FOOT IMPACT STREAKS */
+      .player-dust { animation: animDust 0.28s linear infinite; }
+      .jump-wind  { animation: animJumpWind 24s linear infinite; }
+
+      /* PLAYER SMOOTH SCRIPTED TIMELINE */
+      .player-character { animation: animPlayerPhysics 24s linear infinite; }
+
+      /* PRINCESS PEACH CONSTANT WAVING AT VIEWER */
+      .princess-wave { animation: animPrincessWave 0.5s ease-in-out infinite; }
+      .heart-float   { animation: animHearts 1.5s ease-in-out infinite; }
+
+      /* FLAG ALWAYS ON TOP WAVING */
+      .flag-cloth { animation: animFlagWave 0.6s ease-in-out infinite; }
+
+      /* BOX BOUNCE &amp; SHAKE IMPACTS (4 BLOCKS: FRONTEND, BACKEND, CLOUD, AI) */
+      .qblock-1 { animation: animHit1 24s linear infinite; }
+      .qblock-2 { animation: animHit2 24s linear infinite; }
+      .qblock-3 { animation: animHit3 24s linear infinite; }
+      .qblock-4 { animation: animHit4 24s linear infinite; }
+
+      /* QBLOCK STATE TRANSITIONS (? TO EMPTY BLOCK ON HIT) */
+      .qstate1-q { animation: animQ1Q 24s linear infinite; }
+      .qstate1-e { animation: animQ1E 24s linear infinite; }
+      .qstate2-q { animation: animQ2Q 24s linear infinite; }
+      .qstate2-e { animation: animQ2E 24s linear infinite; }
+      .qstate3-q { animation: animQ3Q 24s linear infinite; }
+      .qstate3-e { animation: animQ3E 24s linear infinite; }
+      .qstate4-q { animation: animQ4Q 24s linear infinite; }
+      .qstate4-e { animation: animQ4E 24s linear infinite; }
+
+      /* ITEM POPUPS WITH SPARKLES &amp; GLOW */
+      .pop-frontend { animation: animPopFrontend 24s linear infinite; }
+      .pop-backend  { animation: animPopBackend 24s linear infinite; }
+      .pop-cloud    { animation: animPopCloud 24s linear infinite; }
+      .pop-ai       { animation: animPopAI 24s linear infinite; }
+
+      /* DYNAMIC HUD SCORE INCREMENTS */
+      .score-0 { animation: animScore0 24s linear infinite; }
+      .score-1 { animation: animScore1 24s linear infinite; }
+      .score-2 { animation: animScore2 24s linear infinite; }
+      .score-3 { animation: animScore3 24s linear infinite; }
+      .score-4 { animation: animScore4 24s linear infinite; }
+
+      /* DYNAMIC LATEST SKILL DISPLAY IN ORDER */
+      .skill-none     { animation: animSkillNone 24s linear infinite; }
+      .skill-frontend { animation: animSkillFrontend 24s linear infinite; }
+      .skill-backend  { animation: animSkillBackend 24s linear infinite; }
+      .skill-cloud    { animation: animSkillCloud 24s linear infinite; }
+      .skill-ai       { animation: animSkillAI 24s linear infinite; }
+
+      /* KEYFRAMES FOR SECONDARY MOTION &amp; WORLD */
+      @keyframes animClouds {
+        0% { transform: translate3d(0px, 0px, 0px); }
+        100% { transform: translate3d(-960px, 0px, 0px); }
+      }
+      @keyframes animHills {
+        0% { transform: translate3d(0px, 0px, 0px); }
+        100% { transform: translate3d(-960px, 0px, 0px); }
+      }
+      @keyframes animWorld {
+        0% { transform: translate3d(0px, 0px, 0px); }
+        100% { transform: translate3d(-2304px, 0px, 0px); }
+      }
+
+      /* BIRD SKY FLIGHT PATH (FLIES RIGHT TO LEFT) */
+      @keyframes animBirdFly {
+        0% { transform: translate3d(1000px, 35px, 0px) scaleX(-1); }
+        100% { transform: translate3d(-100px, 35px, 0px) scaleX(-1); }
+      }
+
+      /* BIRD WING FLAPPING ALTERNATION */
+      @keyframes animWingUp {
+        0%, 49.9% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+      @keyframes animWingDown {
+        0%, 49.9% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+      }
+
+      /* EYE BLINK (EVERY 5 SECONDS) */
+      @keyframes animEyeBlink {
+        0%, 94%, 98%, 100% { transform: scaleY(1); }
+        96% { transform: scaleY(0.1); }
+      }
+
+      /* SLOWED GENTLE EYEBROW MOTION */
+      @keyframes animBrowBounce {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-0.5px); }
+      }
+
+      /* ROSY CHEEK SOFT PULSE */
+      @keyframes animCheekBlush {
+        0%, 100% { opacity: 0.8; }
+        50% { opacity: 1.0; }
+      }
+
+      /* SHADOW RESIZING ON FAST SNAPPY JUMPS */
+      @keyframes animDynamicShadow {
+        0%, 19.9% { transform: scale(1); opacity: 0.4; }
+        /* Jump 1 (t=5s) */
+        20.83% { transform: scale(0.6); opacity: 0.2; }
+        22.2% { transform: scale(1.2); opacity: 0.5; }
+
+        /* Jump 2 (t=9s) */
+        37.5% { transform: scale(0.6); opacity: 0.2; }
+        38.8% { transform: scale(1.2); opacity: 0.5; }
+
+        /* Fast Snappy Pipe Jump (Launch t=10.2s, Apex t=10.83s, Land t=11.4s) */
+        42.5% { transform: scale(1); opacity: 0.4; }
+        45.1% { transform: scale(0.4); opacity: 0.15; }
+        47.5% { transform: scale(1.25); opacity: 0.5; }
+
+        /* Jump 4 (t=13s) */
+        54.17% { transform: scale(0.6); opacity: 0.2; }
+        55.5% { transform: scale(1.2); opacity: 0.5; }
+
+        /* Jump 5 (t=17s) */
+        70.83% { transform: scale(0.6); opacity: 0.2; }
+        72.2% { transform: scale(1.2); opacity: 0.5; }
+
+        76%, 100% { transform: scale(1); opacity: 0.4; }
+      }
+
+      /* WIND STREAKS ON FAST PIPE JUMP */
+      @keyframes animJumpWind {
+        0%, 43.5% { opacity: 0; transform: translateY(0px); }
+        45.1% { opacity: 0.8; transform: translateY(8px); }
+        47.0% { opacity: 0; transform: translateY(16px); }
+        100% { opacity: 0; }
+      }
+
+      /* DYNAMIC FRAME ALTERNATION FOR ARMS AND LEGS */
+      @keyframes animLeg1 {
+        0%, 49.9% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+      @keyframes animLeg2 {
+        0%, 49.9% { opacity: 0; }
+        50%, 100% { opacity: 1; }
+      }
+      @keyframes animDust {
+        0% { opacity: 0.8; transform: translateX(0px) scale(1); }
+        100% { opacity: 0; transform: translateX(-10px) scale(0.5); }
+      }
+
+      /* PRINCESS HAND WAVING AT VIEWER */
+      @keyframes animPrincessWave {
+        0%, 100% { transform: rotate(0deg); }
+        50% { transform: rotate(-30deg); }
+      }
+
+      /* FLOATING HEARTS ABOVE PRINCESS */
+      @keyframes animHearts {
+        0% { opacity: 0.4; transform: translateY(0px); }
+        50% { opacity: 1; transform: translateY(-8px); }
+        100% { opacity: 0.4; transform: translateY(0px); }
+      }
+
+      /* FLAG ALWAYS ON TOP WAVING AT TOP OF POLE */
+      @keyframes animFlagWave {
+        0%, 100% { transform: translateY(0px) scaleX(1); }
+        50% { transform: translateY(0px) scaleX(0.92); }
+      }
+
+      /* QUESTION BLOCK TRANSITIONS (? BLOCK TO EMPTY SOLID BLOCK ON HIT) */
+      @keyframes animQ1Q { 0%, 20.82% { opacity: 1; } 20.83%, 100% { opacity: 0; } }
+      @keyframes animQ1E { 0%, 20.82% { opacity: 0; } 20.83%, 100% { opacity: 1; } }
+
+      @keyframes animQ2Q { 0%, 37.49% { opacity: 1; } 37.50%, 100% { opacity: 0; } }
+      @keyframes animQ2E { 0%, 37.49% { opacity: 0; } 37.50%, 100% { opacity: 1; } }
+
+      @keyframes animQ3Q { 0%, 54.16% { opacity: 1; } 54.17%, 100% { opacity: 0; } }
+      @keyframes animQ3E { 0%, 54.16% { opacity: 0; } 54.17%, 100% { opacity: 1; } }
+
+      @keyframes animQ4Q { 0%, 70.82% { opacity: 1; } 70.83%, 100% { opacity: 0; } }
+      @keyframes animQ4E { 0%, 70.82% { opacity: 0; } 70.83%, 100% { opacity: 1; } }
+
+      /* SNAPPY 2D MARIO PARABOLIC JUMP PHYSICS */
+      @keyframes animPlayerPhysics {
+        0%, 18.5% { transform: translateY(0px); }
+
+        /* Jump 1 - Hit QBlock 1 FRONTEND (t=5s / 20.83%) */
+        20.0% { transform: translateY(0px) scale(1, 1); }
+        20.83% { transform: translateY(-28px) scale(0.95, 1.05); }
+        22.2% { transform: translateY(0px) scale(1.05, 0.95); }
+
+        /* Jump 2 - Hit QBlock 2 BACKEND (t=9s / 37.5%) */
+        36.5% { transform: translateY(0px) scale(1, 1); }
+        37.5% { transform: translateY(-28px) scale(0.95, 1.05); }
+        38.8% { transform: translateY(0px) scale(1.05, 0.95); }
+
+        /* Jump 3 - SNAPPY FAST PIPE JUMP */
+        42.5% { transform: translateY(0px) scale(1, 1); }
+        45.1% { transform: translateY(-48px) scale(0.92, 1.08); }
+        47.5% { transform: translateY(0px) scale(1.08, 0.92); }
+
+        /* Jump 4 - Hit QBlock 3 CLOUD (t=13s / 54.17%) */
+        53.2% { transform: translateY(0px) scale(1, 1); }
+        54.17% { transform: translateY(-28px) scale(0.95, 1.05); }
+        55.5% { transform: translateY(0px) scale(1.05, 0.95); }
+
+        /* Jump 5 - Hit QBlock 4 AI (t=17s / 70.83%) */
+        69.8% { transform: translateY(0px) scale(1, 1); }
+        70.83% { transform: translateY(-28px) scale(0.95, 1.05); }
+        72.2% { transform: translateY(0px) scale(1.05, 0.95); }
+
+        /* Castle Arrival (t=18.5s to 24s) */
+        76% { transform: translateY(0px); }
+        78% { transform: translateY(-16px); }
+        80%, 100% { transform: translateY(0px); }
+      }
+
+      /* BOX BOUNCE SHAKE IMPACTS */
+      @keyframes animHit1 {
+        0%, 20.3% { transform: translateY(0px) rotate(0deg); }
+        20.83% { transform: translateY(-6px) rotate(-2deg); }
+        21.5% { transform: translateY(0px) rotate(0deg); }
+        100% { transform: translateY(0px); }
+      }
+      @keyframes animHit2 {
+        0%, 37.0% { transform: translateY(0px) rotate(0deg); }
+        37.50% { transform: translateY(-6px) rotate(2deg); }
+        38.2% { transform: translateY(0px) rotate(0deg); }
+        100% { transform: translateY(0px); }
+      }
+      @keyframes animHit3 {
+        0%, 53.6% { transform: translateY(0px) rotate(0deg); }
+        54.17% { transform: translateY(-6px) rotate(-2deg); }
+        54.8% { transform: translateY(0px) rotate(0deg); }
+        100% { transform: translateY(0px); }
+      }
+      @keyframes animHit4 {
+        0%, 70.3% { transform: translateY(0px) rotate(0deg); }
+        70.83% { transform: translateY(-6px) rotate(2deg); }
+        71.5% { transform: translateY(0px) rotate(0deg); }
+        100% { transform: translateY(0px); }
+      }
+
+      /* ITEM POPUPS WITH UPWARD DRIFT &amp; SPARKLE */
+      @keyframes animPopFrontend {
+        0%, 20.5% { opacity: 0; transform: translateY(0px) scale(0.8); }
+        21.2% { opacity: 1; transform: translateY(-24px) scale(1.1); }
+        24% { opacity: 1; transform: translateY(-38px) scale(1); }
+        26.5% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+        100% { opacity: 0; }
+      }
+      @keyframes animPopBackend {
+        0%, 37.2% { opacity: 0; transform: translateY(0px) scale(0.8); }
+        38.0% { opacity: 1; transform: translateY(-24px) scale(1.1); }
+        40.5% { opacity: 1; transform: translateY(-38px) scale(1); }
+        43% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+        100% { opacity: 0; }
+      }
+      @keyframes animPopCloud {
+        0%, 53.8% { opacity: 0; transform: translateY(0px) scale(0.8); }
+        54.6% { opacity: 1; transform: translateY(-24px) scale(1.1); }
+        57.2% { opacity: 1; transform: translateY(-38px) scale(1); }
+        59.8% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+        100% { opacity: 0; }
+      }
+      @keyframes animPopAI {
+        0%, 70.5% { opacity: 0; transform: translateY(0px) scale(0.8); }
+        71.3% { opacity: 1; transform: translateY(-24px) scale(1.1); }
+        73.8% { opacity: 1; transform: translateY(-38px) scale(1); }
+        76.5% { opacity: 0; transform: translateY(-50px) scale(0.9); }
+        100% { opacity: 0; }
+      }
+
+      /* DYNAMIC HUD SCORE TIMELINE */
+      @keyframes animScore0 { 0%, 20.82% { opacity: 1; } 20.83%, 100% { opacity: 0; } }
+      @keyframes animScore1 { 0%, 20.82% { opacity: 0; } 20.83%, 37.49% { opacity: 1; } 37.50%, 100% { opacity: 0; } }
+      @keyframes animScore2 { 0%, 37.49% { opacity: 0; } 37.50%, 54.16% { opacity: 1; } 54.17%, 100% { opacity: 0; } }
+      @keyframes animScore3 { 0%, 54.16% { opacity: 0; } 54.17%, 70.82% { opacity: 1; } 70.83%, 100% { opacity: 0; } }
+      @keyframes animScore4 { 0%, 70.82% { opacity: 0; } 70.83%, 100% { opacity: 1; } }
+
+      /* DYNAMIC LATEST SKILL DISPLAY TIMELINE IN EXACT ORDER */
+      @keyframes animSkillNone     { 0%, 20.82% { opacity: 1; } 20.83%, 100% { opacity: 0; } }
+      @keyframes animSkillFrontend { 0%, 20.82% { opacity: 0; } 20.83%, 37.49% { opacity: 1; } 37.50%, 100% { opacity: 0; } }
+      @keyframes animSkillBackend  { 0%, 37.49% { opacity: 0; } 37.50%, 54.16% { opacity: 1; } 54.17%, 100% { opacity: 0; } }
+      @keyframes animSkillCloud    { 0%, 54.16% { opacity: 0; } 54.17%, 70.82% { opacity: 1; } 70.83%, 100% { opacity: 0; } }
+      @keyframes animSkillAI       { 0%, 70.82% { opacity: 0; } 70.83%, 100% { opacity: 1; } }
+
+    </style>
+
+    <!-- SYMBOLS -->
+    <g id="sym-mario-bird">
+      <rect x="3" y="3" width="10" height="6" fill="#ef4444"/>
+      <rect x="5" y="2" width="6" height="2" fill="#f87171"/>
+      <rect x="4" y="8" width="7" height="2" fill="#dc2626"/>
+
+      <rect x="0" y="4" width="4" height="3" fill="#f59e0b"/>
+      <rect x="1" y="5" width="2" height="1" fill="#fbbf24"/>
+
+      <rect x="4" y="3" width="2" height="2" fill="#0f172a"/>
+      <rect x="5" y="3" width="1" height="1" fill="#ffffff"/>
+
+      <rect x="12" y="4" width="4" height="2" fill="#ffffff"/>
+
+      <g class="wing-up">
+        <path d="M5,3 L9,-3 L12,2 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.5"/>
+      </g>
+      <g class="wing-down">
+        <path d="M5,6 L9,11 L12,7 Z" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="0.5"/>
+      </g>
+    </g>
+
+    <g id="sym-brick">
+      <rect x="0" y="0" width="24" height="24" fill="#0f172a"/>
+      <rect x="1" y="1" width="22" height="22" fill="#b45309"/>
+      <rect x="1" y="1" width="22" height="2" fill="#f59e0b"/>
+      <rect x="1" y="11" width="22" height="2" fill="#0f172a"/>
+      <rect x="2" y="2" width="9" height="8" fill="#d97706"/>
+      <rect x="13" y="2" width="10" height="8" fill="#d97706"/>
+      <rect x="2" y="13" width="7" height="9" fill="#d97706"/>
+      <rect x="11" y="13" width="11" height="9" fill="#d97706"/>
+    </g>
+
+    <g id="sym-qblock">
+      <rect x="0" y="0" width="24" height="24" fill="#0f172a"/>
+      <rect x="1" y="1" width="22" height="22" fill="#f59e0b"/>
+      <rect x="1" y="1" width="22" height="3" fill="#fef08a"/>
+      <rect x="1" y="1" width="3" height="22" fill="#fef08a"/>
+      <rect x="9" y="5" width="6" height="2" fill="#0f172a"/>
+      <rect x="13" y="7" width="2" height="4" fill="#0f172a"/>
+      <rect x="10" y="9" width="4" height="2" fill="#0f172a"/>
+      <rect x="10" y="13" width="2" height="2" fill="#0f172a"/>
+      <rect x="10" y="17" width="2" height="2" fill="#0f172a"/>
+      <rect x="2" y="2" width="2" height="2" fill="#78350f"/>
+      <rect x="20" y="2" width="2" height="2" fill="#78350f"/>
+      <rect x="2" y="20" width="2" height="2" fill="#78350f"/>
+      <rect x="20" y="20" width="2" height="2" fill="#78350f"/>
+    </g>
+
+    <g id="sym-empty-block">
+      <rect x="0" y="0" width="24" height="24" fill="#0f172a"/>
+      <rect x="1" y="1" width="22" height="22" fill="#78350f"/>
+      <rect x="1" y="1" width="22" height="2" fill="#a16207"/>
+      <rect x="1" y="1" width="2" height="22" fill="#a16207"/>
+      <rect x="2" y="2" width="2" height="2" fill="#451a03"/>
+      <rect x="20" y="2" width="2" height="2" fill="#451a03"/>
+      <rect x="2" y="20" width="2" height="2" fill="#451a03"/>
+      <rect x="20" y="20" width="2" height="2" fill="#451a03"/>
+    </g>
+
+    <g id="sym-pipe">
+      <rect x="0" y="0" width="32" height="10" fill="#0f172a"/>
+      <rect x="1" y="1" width="30" height="8" fill="#16a34a"/>
+      <rect x="3" y="1" width="4" height="8" fill="#86efac"/>
+      <rect x="23" y="1" width="5" height="8" fill="#15803d"/>
+      <rect x="3" y="10" width="26" height="26" fill="#0f172a"/>
+      <rect x="4" y="10" width="24" height="26" fill="#16a34a"/>
+      <rect x="6" y="10" width="4" height="26" fill="#86efac"/>
+      <rect x="21" y="10" width="5" height="26" fill="#15803d"/>
+    </g>
+
+    <g id="sym-hill">
+      <path d="M0,80 Q40,0 80,80 Z" fill="#22c55e"/>
+      <path d="M0,80 Q40,0 80,80 Z" fill="none" stroke="#0f172a" stroke-width="2"/>
+      <path d="M10,80 Q40,15 70,80 Z" fill="#16a34a" opacity="0.4"/>
+      <circle cx="40" cy="30" r="3" fill="#ffffff" opacity="0.6"/>
+    </g>
+
+    <g id="sym-cloud">
+      <rect x="6" y="12" width="36" height="10" fill="#ffffff"/>
+      <rect x="12" y="6" width="24" height="16" fill="#ffffff"/>
+      <rect x="18" y="3" width="12" height="6" fill="#e0f2fe"/>
+      <rect x="6" y="20" width="36" height="2" fill="#94a3b8"/>
+    </g>
+  </defs>
+
+  <!-- MARIO BLUE SKY BACKGROUND -->
+  <rect x="0" y="0" width="960" height="240" fill="#5c94fc"/>
+
+  <!-- Pixel Sun -->
+  <g transform="translate(820, 20)">
+    <rect x="0" y="0" width="24" height="24" fill="#fef08a"/>
+    <rect x="-4" y="8" width="32" height="8" fill="#fde047" opacity="0.6"/>
+    <rect x="8" y="-4" width="8" height="32" fill="#fde047" opacity="0.6"/>
+  </g>
+
+  <!-- LAYER 1: CLOUDS -->
+  <g class="scroll-clouds">
+    <g id="clouds-group">
+      <use href="#sym-cloud" x="60" y="15"/>
+      <use href="#sym-cloud" x="380" y="10" transform="scale(1.2)"/>
+      <use href="#sym-cloud" x="720" y="25" transform="scale(0.9)"/>
+    </g>
+    <use href="#clouds-group" x="960" y="0"/>
+  </g>
+
+  <!-- FLYING MARIO BIRD IN SKY -->
+  <g class="mario-bird-fly">
+    <use href="#sym-mario-bird" x="0" y="0"/>
+  </g>
+
+  <!-- LAYER 2: GREEN HILLS -->
+  <g class="scroll-hills">
+    <g id="hills-group">
+      <use href="#sym-hill" x="30" y="96"/>
+      <use href="#sym-hill" x="360" y="96" transform="scale(1.3)"/>
+      <use href="#sym-hill" x="700" y="96"/>
+    </g>
+    <use href="#hills-group" x="960" y="0"/>
+  </g>
+
+  <!-- LAYER 3: FOREGROUND WORLD -->
+  <g class="scroll-world">
+    <g id="world-level-content">
+
+      <!-- GROUND LAYER (Y=176px SURFACE) -->
+      <g id="ground-pattern">
+        <path d="M0,176 H2880 V240 H0 Z" fill="#b45309"/>
+        <rect x="0" y="176" width="2880" height="4" fill="#f59e0b"/>
+        <rect x="0" y="176" width="2880" height="1" fill="#0f172a"/>
+        <path d="M0,192 H2880 M0,208 H2880 M0,224 H2880" stroke="#78350f" stroke-width="2"/>
+
+        <rect x="40" y="195" width="4" height="4" fill="#78350f"/>
+        <rect x="180" y="210" width="6" height="4" fill="#78350f"/>
+        <rect x="340" y="200" width="4" height="4" fill="#78350f"/>
+        <rect x="580" y="215" width="5" height="3" fill="#78350f"/>
+        <rect x="890" y="198" width="6" height="4" fill="#78350f"/>
+        <rect x="1140" y="212" width="4" height="4" fill="#78350f"/>
+        <rect x="1450" y="202" width="5" height="3" fill="#78350f"/>
+        <rect x="1780" y="218" width="6" height="4" fill="#78350f"/>
+      </g>
+
+      <!-- 1ST BLOCK: FRONTEND (REACT / TS LOGO) (x=620, y=90) -->
+      <g transform="translate(620, 90)">
+        <g class="qblock-1">
+          <use href="#sym-qblock" class="qstate1-q" x="0" y="0"/>
+          <use href="#sym-empty-block" class="qstate1-e" x="0" y="0"/>
+        </g>
+        <g class="pop-frontend" transform="translate(-4, -10)">
+          <rect x="0" y="0" width="32" height="20" fill="#0f172a" rx="3"/>
+          <rect x="2" y="2" width="28" height="16" fill="#61dafb" rx="2"/>
+          <text x="16" y="14" font-family="monospace, 'Courier New', sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">RCT</text>
+        </g>
+      </g>
+
+      <!-- 2ND BLOCK: BACKEND PLATFORM WITH CONNECTED BRICKS (x=952 to 1048, y=90) -->
+      <use href="#sym-brick" x="952" y="90"/>
+      <use href="#sym-brick" x="976" y="90"/>
+      <g transform="translate(1000, 90)">
+        <g class="qblock-2">
+          <use href="#sym-qblock" class="qstate2-q" x="0" y="0"/>
+          <use href="#sym-empty-block" class="qstate2-e" x="0" y="0"/>
+        </g>
+        <g class="pop-backend" transform="translate(-4, -10)">
+          <rect x="0" y="0" width="32" height="20" fill="#0f172a" rx="3"/>
+          <rect x="2" y="2" width="28" height="16" fill="#38bdf8" rx="2"/>
+          <text x="16" y="14" font-family="monospace, 'Courier New', sans-serif" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">PY</text>
+        </g>
+      </g>
+      <use href="#sym-brick" x="1024" y="90"/>
+      <use href="#sym-brick" x="1048" y="90"/>
+
+      <!-- EVENT 3: SMALLER WARP PIPE (x=1180, y=140 - RESTS ON Y=176 GROUND) -->
+      <use href="#sym-pipe" x="1180" y="140"/>
+
+      <!-- 3RD BLOCK: CLOUD (DOCKER / AWS LOGO) (x=1380, y=90) -->
+      <g transform="translate(1380, 90)">
+        <g class="qblock-3">
+          <use href="#sym-qblock" class="qstate3-q" x="0" y="0"/>
+          <use href="#sym-empty-block" class="qstate3-e" x="0" y="0"/>
+        </g>
+        <g class="pop-cloud" transform="translate(-4, -10)">
+          <rect x="0" y="0" width="32" height="20" fill="#0f172a" rx="3"/>
+          <rect x="2" y="2" width="28" height="16" fill="#0ea5e9" rx="2"/>
+          <text x="16" y="14" font-family="monospace, 'Courier New', sans-serif" font-size="8" font-weight="bold" fill="#ffffff" text-anchor="middle">CLOUD</text>
+        </g>
+      </g>
+
+      <!-- 4TH BLOCK: AI (AI / BRAIN LOGO) (x=1760, y=90) -->
+      <g transform="translate(1760, 90)">
+        <g class="qblock-4">
+          <use href="#sym-qblock" class="qstate4-q" x="0" y="0"/>
+          <use href="#sym-empty-block" class="qstate4-e" x="0" y="0"/>
+        </g>
+        <g class="pop-ai" transform="translate(-4, -10)">
+          <rect x="0" y="0" width="32" height="20" fill="#0f172a" rx="3"/>
+          <rect x="2" y="2" width="28" height="16" fill="#a855f7" rx="2"/>
+          <text x="16" y="14" font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">AI</text>
+        </g>
+      </g>
+
+      <!-- FLAG POLE (FLAG ALWAYS ON TOP OF POLE) -->
+      <g transform="translate(1810, 76)">
+        <rect x="12" y="94" width="12" height="6" fill="#0f172a"/>
+        <rect x="16" y="0" width="4" height="96" fill="#ffffff"/>
+        <circle cx="18" cy="0" r="4" fill="#fbbf24"/>
+
+        <!-- FLAG ALWAYS WAVING ON TOP AT Y=0 -->
+        <g class="flag-cloth" transform="translate(20, 0)">
+          <rect x="0" y="0" width="24" height="16" fill="#0284c7"/>
+          <rect x="0" y="0" width="24" height="2" fill="#38bdf8"/>
+          <circle cx="10" cy="8" r="2.5" fill="#ffffff"/>
+        </g>
+      </g>
+
+      <!-- PEACH'S CASTLE WITH DETAILED PRINCESS PEACH &amp; 3 FLOATING HEARTS -->
+      <g transform="translate(1850, 0)">
+        <!-- Outer Stone Wall Base -->
+        <rect x="10" y="110" width="140" height="66" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+        <path d="M10,130 H150 M10,150 H150" stroke="#d97706" stroke-width="1.5"/>
+
+        <!-- Left Lower Turret -->
+        <path d="M10,110 L25,65 L40,110 Z" fill="#dc2626" stroke="#991b1b" stroke-width="1.5"/>
+        <path d="M15,95 Q25,85 35,95" stroke="#b91c1c" stroke-width="1.5" fill="none"/>
+        <rect x="15" y="110" width="20" height="66" fill="#fde047" stroke="#78350f" stroke-width="1.5"/>
+        <polygon points="25,65 38,58 25,51" fill="#fbbf24"/>
+        <line x1="25" y1="65" x2="25" y2="48" stroke="#78350f" stroke-width="1.5"/>
+
+        <!-- Right Lower Turret -->
+        <path d="M120,110 L135,65 L150,110 Z" fill="#dc2626" stroke="#991b1b" stroke-width="1.5"/>
+        <path d="M125,95 Q135,85 145,95" stroke="#b91c1c" stroke-width="1.5" fill="none"/>
+        <rect x="125" y="110" width="20" height="66" fill="#fde047" stroke="#78350f" stroke-width="1.5"/>
+        <polygon points="135,65 148,58 135,51" fill="#fbbf24"/>
+        <line x1="135" y1="65" x2="135" y2="48" stroke="#78350f" stroke-width="1.5"/>
+
+        <!-- Center Main Tower -->
+        <rect x="45" y="55" width="70" height="121" fill="#fef3c7" stroke="#78350f" stroke-width="2"/>
+        <rect x="40" y="50" width="80" height="8" fill="#d97706" stroke="#78350f" stroke-width="1.5"/>
+
+        <!-- Main Grand Red Cone Roof -->
+        <path d="M35,50 L80,0 L125,50 Z" fill="#dc2626" stroke="#991b1b" stroke-width="2"/>
+        <path d="M50,35 Q80,20 110,35 M60,20 Q80,10 100,20" stroke="#b91c1c" stroke-width="2" fill="none"/>
+
+        <!-- Main Golden Flag on Top -->
+        <polygon points="80,0 96,-8 80,-16" fill="#fbbf24"/>
+        <line x1="80" y1="0" x2="80" y2="-20" stroke="#78350f" stroke-width="2"/>
+
+        <!-- Upper Arched Stained Glass Window -->
+        <path d="M70,75 A10,10 0 0,1 90,75 V90 H70 Z" fill="#fbbf24" stroke="#78350f" stroke-width="1.5"/>
+        <line x1="80" y1="65" x2="80" y2="90" stroke="#78350f" stroke-width="1"/>
+        <line x1="70" y1="80" x2="90" y2="80" stroke="#78350f" stroke-width="1"/>
+
+        <!-- Grand Arched Entrance Doorway -->
+        <path d="M58,176 A22,22 0 0,1 102,176 Z" fill="#2d0f02" stroke="#78350f" stroke-width="2"/>
+        <path d="M54,176 A26,26 0 0,1 106,176" fill="none" stroke="#d97706" stroke-width="3"/>
+        <path d="M60,176 A20,20 0 0,1 100,176 Z" fill="#0f172a"/>
+
+        <!-- DETAILED PRINCESS PEACH SPRITE WITH 3 FLOATING HEARTS -->
+        <g id="princess-peach-character" transform="translate(64, 138)">
+          <!-- 3 FLOATING HEART PARTICLES -->
+          <g class="heart-float">
+            <path d="M-8,-8 Q-6,-12 -4,-8 Q-2,-12 0,-8 Q0,-4 -4,0 Q-8,-4 -8,-8 Z" fill="#f43f5e"/>
+            <path d="M6,-18 Q8,-22 10,-18 Q12,-22 14,-18 Q14,-14 10,-10 Q6,-14 6,-18 Z" fill="#e11d48"/>
+            <path d="M16,-10 Q18,-14 20,-10 Q22,-14 24,-10 Q24,-6 20,-2 Q16,-6 16,-10 Z" fill="#ec4899"/>
+          </g>
+
+          <!-- Flowing Auburn Red Hair (Back) -->
+          <path d="M4,4 C0,12 2,24 6,30 L26,30 C30,24 32,12 28,4 Z" fill="#b91c1c"/>
+          <path d="M6,6 C2,14 4,22 8,28 L24,28 C28,22 30,14 26,6 Z" fill="#dc2626"/>
+
+          <!-- Detailed Jeweled Golden Crown -->
+          <path d="M8,1 L10,-4 L13,-1 L16,-5 L19,-1 L22,-4 L24,1 Z" fill="#facc15" stroke="#78350f" stroke-width="0.8"/>
+          <circle cx="16" cy="-2" r="1.2" fill="#ef4444"/>
+          <circle cx="11" cy="-1" r="0.8" fill="#38bdf8"/>
+          <circle cx="21" cy="-1" r="0.8" fill="#38bdf8"/>
+
+          <!-- Cute Face (Looking at Viewer) -->
+          <rect x="8" y="3" width="16" height="11" fill="#fdba74"/>
+
+          <!-- Rosy Cheeks -->
+          <rect x="7" y="10" width="4" height="3" fill="#fb7185"/>
+          <rect x="21" y="10" width="4" height="3" fill="#fb7185"/>
+
+          <!-- Expressive Eyes with Sparkles -->
+          <rect x="10" y="6" width="3" height="4" fill="#0f172a"/>
+          <rect x="11" y="6" width="1" height="1" fill="#ffffff"/>
+
+          <rect x="19" y="6" width="3" height="4" fill="#0f172a"/>
+          <rect x="20" y="6" width="1" height="1" fill="#ffffff"/>
+
+          <!-- Adorable Smile -->
+          <path d="M13,11 Q16,14 19,11" stroke="#e11d48" stroke-width="1.2" fill="none"/>
+
+          <!-- Royal White Gown with Red Ribbon &amp; Puffed Sleeves -->
+          <path d="M6,14 Q16,13 26,14 L30,34 L2,34 Z" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+          <rect x="7" y="22" width="18" height="3" fill="#dc2626"/>
+          <circle cx="16" cy="23.5" r="2" fill="#b91c1c"/>
+
+          <!-- Gown Hem Accent Stripe -->
+          <path d="M3,31 Q16,33 29,31 V34 H3 Z" fill="#dc2626"/>
+
+          <!-- Left Resting Arm -->
+          <circle cx="5" cy="16" r="3" fill="#ffffff"/>
+          <rect x="4" y="18" width="3" height="6" fill="#fdba74"/>
+
+          <!-- Waving Right Arm -->
+          <circle cx="27" cy="16" r="3" fill="#ffffff"/>
+          <g transform="translate(26, 17)">
+            <g class="princess-wave" transform-origin="0 0">
+              <rect x="0" y="-8" width="4" height="10" fill="#fdba74"/>
+              <circle cx="2" cy="-9" r="2.5" fill="#fdba74"/>
+            </g>
+          </g>
+        </g>
+      </g>
+
+    </g>
+    <use href="#world-level-content" x="2304" y="0"/>
+  </g>
+
+  <!-- ===================================================
+       DEVELOPER MONK HERO (UNTOUCHED GEOMETRY, ENRICHED SECONDARY ANIMATIONS)
+       =================================================== -->
+  <g transform="translate(140, 137) scale(1.25)">
+    <g class="player-character">
+      <!-- Dynamic Resizing Shadow on Ground -->
+      <g class="player-shadow">
+        <ellipse cx="16" cy="32" rx="10" ry="2.5" fill="#000000"/>
+      </g>
+
+      <!-- Wind Streaks during Jump Ascents -->
+      <g class="jump-wind" transform="translate(6, 10)">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="2,2"/>
+        <line x1="20" y1="-2" x2="20" y2="6" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="2,2"/>
+      </g>
+
+      <!-- Dust Particles -->
+      <g class="player-dust" transform="translate(-4, 28)">
+        <circle cx="0" cy="0" r="2" fill="#e2e8f0"/>
+        <circle cx="-5" cy="2" r="1.5" fill="#cbd5e1"/>
+      </g>
+
+      <!-- ULTRA-CUTE SD MONK HERO SPRITE (UNTOUCHED ORIGINAL PIXEL ART) -->
+      <g id="player-sprite">
+        <!-- HUGE BALD DOME HEAD &amp; FOREHEAD -->
+        <rect x="10" y="0" width="12" height="1" fill="#fed7aa"/>
+        <rect x="8" y="1" width="16" height="3" fill="#fed7aa"/>
+        <rect x="6" y="4" width="20" height="12" fill="#fdba74"/>
+        <rect x="5" y="10" width="22" height="7" fill="#fdba74"/>
+
+        <!-- Shiny Forehead Highlight -->
+        <rect x="12" y="1" width="5" height="1" fill="#fff7ed"/>
+        <rect x="11" y="2" width="4" height="2" fill="#fff7ed"/>
+        <rect x="10" y="4" width="2" height="2" fill="#fff7ed"/>
+
+        <!-- Ears -->
+        <rect x="4" y="9" width="2" height="4" fill="#fdba74"/>
+        <rect x="26" y="9" width="2" height="4" fill="#fdba74"/>
+
+        <!-- 2 SEPARATE EXPRESSIVE CURVED EYEBROWS (WITH SLOW GENTLE MOTION) -->
+        <g class="brow-bounce">
+          <rect x="10" y="7" width="5" height="2" fill="#0f172a"/>
+          <rect x="17" y="7" width="6" height="2" fill="#0f172a"/>
+        </g>
+
+        <!-- 2 CLEAR DISTINCT EYES WITH SECONDARY BLINK ANIMATION -->
+        <g class="eye-blink" transform-origin="16 11">
+          <rect x="11" y="10" width="3" height="3" fill="#0f172a"/>
+          <rect x="12" y="10" width="1" height="1" fill="#fff7ed"/>
+
+          <rect x="18" y="10" width="4" height="3" fill="#0f172a"/>
+          <rect x="19" y="10" width="1" height="1" fill="#fff7ed"/>
+        </g>
+
+        <!-- Cute Rosy Cheeks (With Gentle Blush Pulse) -->
+        <g class="cheek-blush">
+          <rect x="7" y="13" width="3" height="2" fill="#fb7185"/>
+          <rect x="22" y="13" width="3" height="2" fill="#fb7185"/>
+        </g>
+
+        <!-- Cute Smile -->
+        <rect x="15" y="14" width="3" height="2" fill="#e11d48"/>
+
+        <!-- CONNECTED NECK &amp; CHUBBY ROBE -->
+        <rect x="12" y="16" width="8" height="3" fill="#fdba74"/>
+
+        <rect x="7" y="18" width="18" height="6" fill="#eab308"/>
+        <rect x="9" y="18" width="14" height="2" fill="#fde047"/>
+        <path d="M11,18 L16,21 L11,24" stroke="#ca8a04" stroke-width="1.5" fill="none"/>
+
+        <!-- Purple Belt -->
+        <rect x="7" y="24" width="18" height="2" fill="#581c87"/>
+
+        <!-- Chubby Pants &amp; Short Boots -->
+        <rect x="8" y="26" width="16" height="2" fill="#c2410c"/>
+
+        <!-- DYNAMIC ALTERNATING RUNNING ARMS &amp; LEGS -->
+        <!-- Frame 1 -->
+        <g class="leg-frame-1">
+          <rect x="4" y="19" width="4" height="3" fill="#ca8a04"/>
+          <rect x="2" y="21" width="3" height="3" fill="#fed7aa"/>
+
+          <rect x="18" y="18" width="5" height="4" fill="#eab308"/>
+          <rect x="22" y="20" width="4" height="4" fill="#fed7aa"/>
+
+          <rect x="6" y="28" width="5" height="2" fill="#fef3c7"/>
+          <rect x="4" y="29" width="6" height="2" fill="#78350f"/>
+          <rect x="3" y="31" width="7" height="1" fill="#451a03"/>
+
+          <rect x="17" y="28" width="5" height="2" fill="#fef3c7"/>
+          <rect x="17" y="29" width="7" height="2" fill="#78350f"/>
+          <rect x="17" y="31" width="8" height="1" fill="#451a03"/>
+        </g>
+
+        <!-- Frame 2 -->
+        <g class="leg-frame-2">
+          <rect x="5" y="18" width="5" height="4" fill="#ca8a04"/>
+          <rect x="3" y="20" width="4" height="4" fill="#fed7aa"/>
+
+          <rect x="17" y="19" width="4" height="3" fill="#eab308"/>
+          <rect x="20" y="21" width="3" height="3" fill="#fed7aa"/>
+
+          <rect x="9" y="28" width="5" height="2" fill="#fef3c7"/>
+          <rect x="8" y="29" width="7" height="2" fill="#78350f"/>
+          <rect x="8" y="31" width="8" height="1" fill="#451a03"/>
+
+          <rect x="14" y="28" width="5" height="2" fill="#fef3c7"/>
+          <rect x="14" y="29" width="6" height="2" fill="#78350f"/>
+          <rect x="14" y="31" width="7" height="1" fill="#451a03"/>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ===================================================
+       MINIMALIST NES MARIO HUD
+       =================================================== -->
+  <g id="hud-top">
+    <rect x="0" y="0" width="960" height="28" fill="#090d16" opacity="0.95"/>
+    <line x1="0" y1="28" x2="960" y2="28" stroke="#0284c7" stroke-width="1.5"/>
+
+    <!-- SCORE -->
+    <text x="30" y="12" font-family="monospace, 'Courier New', sans-serif" font-size="8" fill="#94a3b8" font-weight="bold">MARIO SCORE</text>
+    <g transform="translate(30, 23)">
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" class="score-0">000000</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" class="score-1">002500</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" class="score-2">005000</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" class="score-3">007500</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#ffffff" class="score-4">010000</text>
+    </g>
+
+    <!-- LATEST SKILL COLLECTED (EXACT SEQUENTIAL ORDER: FRONTEND -> BACKEND -> CLOUD -> AI) -->
+    <text x="380" y="12" font-family="monospace, 'Courier New', sans-serif" font-size="8" fill="#94a3b8" font-weight="bold">LATEST SKILL COLLECTED</text>
+    <g transform="translate(380, 23)">
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#94a3b8" class="skill-none">STARTING RUN...</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#61dafb" class="skill-frontend">1. [+] FRONTEND (REACT / TS)</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#38bdf8" class="skill-backend">2. [+] BACKEND (PYTHON / NODE)</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#0ea5e9" class="skill-cloud">3. [+] CLOUD (DOCKER / AWS)</text>
+      <text font-family="monospace, 'Courier New', sans-serif" font-size="10" font-weight="bold" fill="#a855f7" class="skill-ai">4. [+] AI AGENTS &amp; RAG</text>
+    </g>
+  </g>
+
+</svg>

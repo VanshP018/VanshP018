@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="64" height="64" shape-rendering="crispEdges">
+  <!-- Python Pixel Art Icon -->
+  <g>
+    <!-- Dark Background Frame -->
+    <rect x="2" y="2" width="28" height="28" rx="4" fill="#0f172a"/>
+    <rect x="4" y="4" width="24" height="24" fill="#1e293b"/>
+
+    <!-- Blue Snake Top -->
+    <rect x="8" y="7" width="10" height="9" fill="#38bdf8"/>
+    <rect x="8" y="7" width="13" height="4" fill="#38bdf8"/>
+    <rect x="15" y="11" width="6" height="5" fill="#38bdf8"/>
+    <rect x="11" y="9" width="2" height="2" fill="#0f172a"/> <!-- Eye -->
+
+    <!-- Yellow / Gold Snake Bottom -->
+    <rect x="14" y="16" width="10" height="9" fill="#f59e0b"/>
+    <rect x="11" y="21" width="13" height="4" fill="#f59e0b"/>
+    <rect x="11" y="16" width="6" height="5" fill="#f59e0b"/>
+    <rect x="19" y="21" width="2" height="2" fill="#0f172a"/> <!-- Eye -->
+  </g>
+</svg>
